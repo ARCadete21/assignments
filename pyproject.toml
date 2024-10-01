@@ -26,3 +26,9 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = ["life_expectancy"]
+
+[tool.pylint."messages control"]
+disable = [
+    "missing-module-docstring",
+    "trailing-whitespace"
+    ]
