@@ -16,25 +16,29 @@ def load_data() -> pd.DataFrame:
 
 def clean_data(df: pd.DataFrame, country: str) -> pd.DataFrame:
     """Clean the pandas DataFrame."""
+    # Melt the DataFrame and separate columns by splitting based on commas
     df = pd.melt(
         df, id_vars='unit,sex,age,geo\\time',
         value_vars=df.columns[1:], var_name='year'
         )
-
+    
+    # Split the column into multiple columns directly na reorder them
     var_cols = ['unit', 'sex', 'age', 'geo']
     df[var_cols] = df['unit,sex,age,geo\\time'].str.split(',', expand=True)
-
     df = df.drop(columns=['unit,sex,age,geo\\time'])
-
     df = df[var_cols + ['year', 'value']]
-
+    
+    # Convert 'year' column to integer
     df['year'] = df['year'].astype(int)
 
-    colon_value_filter = df['value'] != ': '
-    df = df[colon_value_filter].copy()
-    df['value'] = df['value'].str.replace(r'[^0-9.]', '', regex=True)
-    df['value'] = df['value'].astype(float)
+    # Remove rows where value is ': ' and clean 'value' column
+    df = df[df['value'] != ': '].copy()
+    df['value'] = pd.to_numeric(
+        df['value'].str.replace(r'[^0-9.]', '', regex=True), 
+        errors='coerce'
+    )
 
+    # Rename 'geo' to 'region' and filter by the specified country
     df = df.rename(columns={'geo': 'region'})
     return df[df['region'] == country].copy()
 
@@ -43,7 +47,6 @@ def save_data(df: pd.DataFrame, country: str) -> None:
     """Save the DataFrame from a given country in the data folder."""
     output_file_name = f'{country.lower()}_life_expectancy.csv'
     output_data_path = os.path.join(DATA_PATH, output_file_name)
-
     df.to_csv(output_data_path, index=False)
 
 
@@ -60,9 +63,9 @@ def main():
     )
     args = parser.parse_args()
 
-    df = load_data()
-    df = clean_data(df, args.country)
-    save_data(df, args.country)
+    data = load_data()
+    data = clean_data(data, args.country)
+    save_data(data, args.country)
 
 
 if __name__ == "__main__":
