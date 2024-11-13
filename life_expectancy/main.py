@@ -1,6 +1,6 @@
 import argparse
-from cleaning import clean_data
-from loading_saving import load_data, save_data
+from life_expectancy.cleaning import clean_data
+from life_expectancy.loading_saving import load_data, save_data
 
 
 def main() -> None:
