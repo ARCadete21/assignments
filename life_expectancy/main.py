@@ -1,6 +1,7 @@
 import argparse
 from life_expectancy.cleaning import clean_data
 from life_expectancy.loading_saving import load_data, save_data
+from life_expectancy.regions import Region
 
 
 def main() -> None:
@@ -10,8 +11,8 @@ def main() -> None:
     )
     parser.add_argument(
         '--country', 
-        type=str,
-        default='PT',
+        type=lambda x: Region[x],
+        default=Region.PT,
         help='The country code for which to clean data (default is PT)'
     )
     args = parser.parse_args()
