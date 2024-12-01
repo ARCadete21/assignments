@@ -1,7 +1,8 @@
 import pandas as pd
+from life_expectancy.regions import Region
 
 
-def clean_data(df: pd.DataFrame, country: str) -> pd.DataFrame:
+def clean_data(df: pd.DataFrame, country: Region) -> pd.DataFrame:
     """Clean the pandas DataFrame."""
     # Melt the DataFrame and separate columns by splitting based on commas
     df = pd.melt(
@@ -27,4 +28,4 @@ def clean_data(df: pd.DataFrame, country: str) -> pd.DataFrame:
 
     # Rename 'geo' to 'region' and filter by the specified country
     df = df.rename(columns={'geo': 'region'})
-    return df[df['region'] == country].copy()
+    return df[df['region'] == country.name].copy()
