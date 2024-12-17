@@ -31,4 +31,4 @@ packages = ["life_expectancy"]
 disable = [
     "missing-module-docstring",
     "trailing-whitespace"
-    ]
+]
