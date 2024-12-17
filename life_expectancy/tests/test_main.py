@@ -21,6 +21,7 @@ def test_get_arguments(mock_parse_args):
 
 @patch('life_expectancy.main.save_data')
 def test_main(mock_save_data):
+    """Test main function workflow by mocking functions used."""
     # Create a mock DataHandler instance
     mock_data_handler = Mock(spec=DataHandler)
 

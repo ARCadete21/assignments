@@ -1,6 +1,4 @@
 """Pytest configuration file"""
-import zipfile
-import json
 import pandas as pd
 import pytest
 
