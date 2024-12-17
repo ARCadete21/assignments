@@ -1,20 +1,14 @@
-"""Tests for the loading/saving module"""
+"""Tests for the savimh module"""
 from unittest.mock import patch
 import pandas as pd
-from life_expectancy.loading_saving import load_data, save_data
+from life_expectancy.saving import save_data
 from life_expectancy.regions import Region
+
 from . import OUTPUT_DIR
 
 
-def test_load_data(eu_life_expectancy_raw):
-    """Test the load_data function"""
-    with patch('pandas.read_csv', return_value=eu_life_expectancy_raw):
-        df = load_data()
-        assert df.equals(eu_life_expectancy_raw)
-
-
 def test_save_data():
-    """Test the save_data function"""
+    """Test the save_data function."""
     with patch('pandas.DataFrame.to_csv') as mock_to_csv:
         df = pd.DataFrame({
             'col1': [1, 2, 3],

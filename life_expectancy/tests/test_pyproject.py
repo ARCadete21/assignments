@@ -15,6 +15,9 @@ import pylint
 import pytest_cov
 import pandas as pd
 
+from pylint.lint import Run
+from pylint.reporters import CollectingReporter
+
 from . import PROJECT_DIR
 
 
